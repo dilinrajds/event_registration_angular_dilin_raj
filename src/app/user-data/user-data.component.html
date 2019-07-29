@@ -1,0 +1,193 @@
+<body>
+  <div class="main" [appHighlighter]="colorChange">
+    <div class="oldchange" style="width:50%; display: inline-block">
+      <button *ngIf="!oldMode" class="class2018" (click)="getLocalData('2018')"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Registered Users in 2018</button>
+      <button *ngIf="oldMode" class="class2019" (click)="getLocalData('2019')"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Registration Form 2019</button>
+
+    </div>
+    <div class="colorChange" style="width:50%; display: inline-block">
+      <button class="green" (click)="colorSelect('green')" appHighlighter> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+      <button (click)="colorSelect('yellow')" appHighlighter class="yellow">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+      <button (click)="colorSelect('blue')" appHighlighter class="blue">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+      <button (click)="colorSelect('red')" appHighlighter class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+      <button (click)="colorSelect('default')" appHighlighter class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+      &nbsp;&nbsp;&nbsp;<img src="assets/logout.png" (click)="gotToHome()" class="logOut">
+    </div>
+    <div class="error" *ngIf="error">
+      <marquee>
+        <b>{{errorText}}</b>
+      </marquee>
+    </div>
+    <div style="width:50%; display: inline-block" *ngIf="deleteMode">
+      <app-delete-component [fullDetails]="allName" [editModeValz]="editModeVal" [displayDeletez]="displayDelete" (callBack)="displayLengthFun($event)"></app-delete-component>
+    </div>
+    <div style="width:50%; display: inline-block" *ngIf="addMode">
+      <b class="heading">EVENT REGISTRATION FORM 2019</b>
+      <BR>
+      <BR> Name:
+      <input id="name" [name]="name" [addShow]="addShow" appErrorhighlighter [(ngModel)]='name' (callBackError)="callBackError($event)"
+        autocomplete="off">
+      <br> Comp:
+      <input id="company" [company]="company" [addShow]="addShow" appErrorhighlighter [(ngModel)]='company' (callBackError)="callBackError($event)"
+        autocomplete="off">
+      <br> Email:
+      <input id="email" [email]="email" [addShow]="addShow" appErrorhighlighter [(ngModel)]='email' (callBackError)="callBackError($event)"
+        autocomplete="off">
+      <br> Phone:
+      <input id="phone" [phone]="phone" [addShow]="addShow" appErrorhighlighter [(ngModel)]='phone' (callBackError)="callBackError($event)"
+        autocomplete="off">
+      <br> Subject:
+      <select id="subject" [subject]="subject" [addShow]="addShow" appErrorhighlighter [(ngModel)]='subject' (callBackError)="callBackError($event)">
+        <option value="game">Gaming Event</option>
+        <option value="soft">Software Event</option>
+        <option value="linux">Linux Event</option>
+        <option value="other">Other Event</option>
+      </select>
+      <br> Are You Existing Customer ?&nbsp;
+      <input type="radio" value="yes" name="cust" id="cus" [cus]="cus" [addShow]="addShow" appErrorhighlighter [(ngModel)]='cus'
+        (callBackError)="callBackError($event)">Yes &nbsp;
+      <input type="radio" selected name="cust" id="cus" value="no" [cus]="cus" [addShow]="addShow" appErrorhighlighter [(ngModel)]='cus'
+        (callBackError)="callBackError($event)">No
+      <br>
+      <button class="button1" *ngIf="addShow" (click)="addPost()">Register</button>
+    </div>
+    <div class="icon" style="width:50%; display: inline-block" *ngIf="length!==0 && oldMode">📝</div>
+    <div class="icon" style="width:50%; display: inline-block" *ngIf="length===0">📝</div>
+    <div class="tablee" *ngIf="addMode" style="width:50%; display: inline-block">
+      <table class="table" *ngIf="length!=0">
+        <tr *ngIf="length!=0">
+          <th>Name</th>
+          <th>Company</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Subject</th>
+          <th>Existing Customer</th>
+        </tr>
+        <tr *ngFor="let allnames of allName; let i=index">
+          <td>{{ allnames.name | customePipe}}</td>
+          <td>{{ allnames.company }}</td>
+          <td>{{ allnames.email }}</td>
+          <td>{{ allnames.phone }}</td>
+          <td>{{ allnames.subject }}</td>
+          <td>{{ allnames.cus }}</td>
+          <td>
+            <button class="button2" (click)="edit(i)">Edit</button>
+          </td>
+          <td>
+            <button class="button5" (click)="delete(i)">Delete</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div style="width:50%; display: inline-block" *ngIf="editMode">
+      <b class="heading">EVENT REGISTRATION FORM 2019</b>
+      <BR>
+      <BR> Name:
+      <input id="name" [name]="name" [addShow]="addShow" appEditErrohighlighter [(ngModel)]='name' (callBackError)="callBackError($event)"
+        autocomplete="off">
+      <br> Comp:
+      <input id="company" [company]="company" [addShow]="addShow" appEditErrohighlighter [(ngModel)]='company' (callBackError)="callBackError($event)"
+        autocomplete="off">
+      <br> Email:
+      <input id="email" [email]="email" [addShow]="addShow" appEditErrohighlighter [(ngModel)]='email' (callBackError)="callBackError($event)"
+        autocomplete="off">
+      <br> Phone:
+      <input id="phone" [phone]="phone" [addShow]="addShow" appEditErrohighlighter [(ngModel)]='phone' (callBackError)="callBackError($event)"
+        autocomplete="off">
+      <br> Subject:
+      <select id="subject" [subject]="subject" [addShow]="addShow" appEditErrohighlighter [(ngModel)]='subject' (callBackError)="callBackError($event)">
+        <option value="game">Gaming Event</option>
+        <option value="soft">Software Event</option>
+        <option value="linux">Linux Event</option>
+        <option value="other">Other Event</option>
+      </select>
+      <br> Are You Existing Customer ?&nbsp;
+      <input type="radio" value="yes" name="cust" id="cus" [cus]="cus" [addShow]="addShow" appEditErrohighlighter [(ngModel)]='cus'
+        (callBackError)="callBackError($event)">Yes &nbsp;
+      <input type="radio" name="cust" id="cus" value="no" [cus]="cus" [addShow]="addShow" appEditErrohighlighter [(ngModel)]='cus'
+        (callBackError)="callBackError($event)">No
+      <br>
+      <button *ngIf="addShow" class="button3" (click)="update()">Update</button>
+      <button class="button3" (click)="cancel()">Cancel</button>
+    </div>
+    <div class="tablee" *ngIf="editMode" style="width:50%; display: inline-block">
+      <table class="table">
+        <tr *ngIf="length!=0">
+          <th>Name</th>
+          <th>Company</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Subject</th>
+          <th>Existing Customer</th>
+        </tr>
+        <tr *ngFor="let allnames of allName; let i=index">
+          <td>{{ allnames.name | customePipe}}</td>
+          <td>{{ allnames.company }}</td>
+          <td>{{ allnames.email }}</td>
+          <td>{{ allnames.phone }}</td>
+          <td>{{ allnames.subject }}</td>
+          <td>{{ allnames.cus }}</td>
+          <td>
+            <button class="button4">Edit</button>
+          </td>
+          <td>
+            <button class="button6">Delete</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="tablee" *ngIf="oldMode" style="width:50%; display: inline-block">
+      <b class="heading">REGISTERED USERS IN 2018</b>
+      <BR>
+      <BR>
+      <BR>
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Company</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Subject</th>
+          <th>Existing Customer</th>
+        </tr>
+        <tr *ngFor="let allnames of allNameLocal;">
+          <td>&nbsp;{{ allnames.name | customePipe }}&nbsp;</td>
+          <td>{{ allnames.company }}</td>
+          <td>{{ allnames.email }}</td>
+          <td>{{ allnames.phone }}</td>
+          <td>{{ allnames.subject }}</td>
+          <td>{{ allnames.cus }}</td>
+        </tr>
+      </table>
+    </div>
+    <div style="width:50%; display: inline-block" *ngIf="deleteMode">
+      <table class="table">
+        <tr *ngIf="length!=0">
+          <th>Name</th>
+          <th>Company</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Subject</th>
+          <th>Existing Customer</th>
+        </tr>
+        <tr *ngFor="let allnames of allName; let i=index">
+          <td>{{ allnames.name | customePipe}}</td>
+          <td>{{ allnames.company }}</td>
+          <td>{{ allnames.email }}</td>
+          <td>{{ allnames.phone }}</td>
+          <td>{{ allnames.subject }}</td>
+          <td>{{ allnames.cus }}</td>
+          <td>
+            <button class="button4">Edit</button>
+          </td>
+          <td>
+            <button class="button6">Delete</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="copy">
+      <b>dil'z ©</b>
+    </div>
+  </div>
+</body>

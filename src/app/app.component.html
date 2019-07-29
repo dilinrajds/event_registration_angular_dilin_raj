@@ -1,0 +1,117 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="home" *ngIf="homeEnable">
+    <div class="loginDone" *ngIf="loginDone">
+        <marquee>
+            <b>{{loginDoneText}}{{numdate| date :'short'}}</b>
+        </marquee>
+    </div>
+    <app-user-data (logOut)="logOut($event)"></app-user-data>
+</div>
+<div class="main" *ngIf="!homeEnable && newUserFlag">
+    <div class="done" *ngIf="done">
+        <marquee>
+            <b>{{doneText}}{{doneTextEmail}}</b>
+        </marquee>
+    </div>
+    <div class="error" *ngIf="error">
+        <marquee>
+            <b>{{errorText}}</b>
+        </marquee>
+    </div>
+    <div class="newUser">
+        <button *ngIf="newUserFlag" class="newAdmin" (click)="newUser('newUser')"> Register Admin</button>
+    </div>
+    <div class="icon">🤔</div><br>
+    <b class="heading">EVENT REGISTRATION FORM 2019</b>
+    <BR>
+    <BR>Email ID:
+    <input id="emailLogin" [(ngModel)]='emailLogin' autocomplete="off">
+    <br> Password
+    <input id="password" [(ngModel)]='password' type="password" autocomplete="off">
+    <br>
+    <br>
+    <button class="lognButton" (click)="loginCheck()">Login</button>
+    <div class="copy">
+        <b>dil'z ©</b>
+    </div>
+</div>
+<div class="main" *ngIf="!homeEnable && !newUserFlag">
+    <div class="newUser">
+        <button *ngIf="!newUserFlag" class="oldLogin" (click)="newUser('login')"> Login Page</button>
+    </div>
+    <div class="icon">✍</div><br>
+    <b class="heading">Admin Registration
+        <br>
+        <br>
+    </b>
+
+    <form class="form" [formGroup]="adminRegForm">
+        <div>
+            <label class="label" for="name">Name:</label>
+            <input formControlName="name" autocomplete="off" type="text" id="name">
+            <span class="formError" *ngIf="name.invalid && name.errors.minlength">
+                <br>Minimum length is 3</span>
+            <span class="formError" *ngIf="name.invalid && name.errors.maxlength">
+                <br>Maximum length is 12</span>
+                <span class="formError" *ngIf="name.invalid && name.errors.pattern">
+                        <br> Only Alphabets Allowed</span>
+        </div>
+        <div>
+            <label class="label" for="id">Id:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input formControlName="id" autocomplete="off" type="text" id="id">
+            <span class="formError" *ngIf="id.invalid && id.errors.maxlength">
+                <br>Maximum length is 12</span>
+                <span class="formError" *ngIf="id.invalid && id.errors.pattern">
+                        <br> Only Numbers Allowed</span>
+        </div>
+        <div>
+            <label class="label" for="dob">Dob:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input formControlName="dob" autocomplete="off" type="date" id="dob">
+        </div>
+        <div>
+            <label class="label" for="address">Address:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input formControlName="address" autocomplete="off" type="text" id="address">
+            <button class="add" *ngIf="address.valid && !addBtnDisable" (click)="addAddress()">+</button>
+        </div>
+        <div formArrayName="altaddress">
+            <div *ngIf="altaddressClicked && address.valid">
+                <div *ngFor="let address of altaddress.controls; let i=index">
+                    <label class="label">Alternative:</label>
+                    <input type="text" [formControlName]="i">
+                    <button class="add" *ngIf="address.valid && addBtnDisable" (click)="deleteAltAdress()">-</button>
+                    <span class="formError" *ngIf="addCheck">
+                        <br>Alternative Address and Address cannot be same</span>
+                </div>
+            </div>
+        </div>
+        <div>
+            <label class="label" for="phone">Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input formControlName="phone" autocomplete="off" type="text" id="phone">
+            <span class="formError" *ngIf="phone.invalid && phone.errors.maxlength">
+                <br>10 Digit Required</span>
+            <span class="formError" *ngIf="phone.invalid && phone.errors.minlength">
+                <br>10 Digit Required</span>
+                <span class="formError" *ngIf="phone.invalid && phone.errors.pattern">
+                        &nbsp;| Only Numbers Allowed</span>
+        </div>
+        <div>
+            <label class="label" for="email">Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input formControlName="email" autocomplete="off" type="text" id="email">
+            <span class="formError" *ngIf="email.invalid && email.errors.pattern">
+                    <br>Email format is wrong</span>
+        </div>
+        <div>
+            <label class="label" for="password">Password:&nbsp;&nbsp;</label>
+            <input formControlName="password" autocomplete="off" type="password" id="password">
+        </div>
+        <div>
+            <button class="submit" *ngIf="adminRegForm.valid" (click)="addAdmin()" type="submit">Submit</button>
+            <button class="submitDisable" *ngIf="!adminRegForm.valid" type="submit">Submit</button>
+            <button class="reset" (click)="clear()">Reset</button>
+        </div>
+    </form>
+    <div class="copy">
+            <b>dil'z ©</b>
+        </div>
+</div>
+<router-outlet></router-outlet>
