@@ -1,6 +1,7 @@
-# MyNewProject
+# MyFirstAngularProject
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.4.
+This project was done to learn Angular
 
 ## Development server
 
