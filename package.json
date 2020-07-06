@@ -19,9 +19,16 @@
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
+    "acorn": "^7.3.1",
     "core-js": "^2.5.4",
+    "handlebars": "^4.7.6",
+    "https-proxy-agent": "^5.0.0",
+    "kind-of": "^6.0.3",
+    "minimist": "^1.2.5",
     "rxjs": "~6.3.3",
+    "serialize-javascript": "^4.0.0",
     "tslib": "^1.9.0",
+    "websocket-extensions": "^0.1.4",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
